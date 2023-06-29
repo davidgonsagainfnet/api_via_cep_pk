@@ -1,12 +1,28 @@
+import 'package:api_via_cep_pk/models/cep.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:api_via_cep_pk/api_via_cep_pk.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
+  
+  test('Teste de pacote da api', () async {
+      final apiCep = CepService();
+
+      Future<Cep> cep = apiCep.listCep("05882050");
+
+      String rua = '';
+      String localidade = "";
+      String uf = "";
+
+      await cep.then((cep) {
+        rua = cep.logradouro;
+        localidade = cep.localidade;
+        uf = cep.uf;
+      });
+
+      expect(rua, 'Rua Lusitano Soares');
+      expect(localidade, 'São Paulo');
+      expect(uf, 'SP');
   });
+
 }
